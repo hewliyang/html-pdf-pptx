@@ -39,3 +39,7 @@ usage:
 npm i
 node slides-to-pptx.js slides.json
 ```
+
+## prereqs
+- libreoffice
+- puppeteer and chromium
