@@ -1,7 +1,10 @@
 {
-  "name": "slides",
+  "name": "manus-slides",
   "version": "1.0.0",
-  "main": "html-to-slides.js",
+  "main": "src/index.js",
+  "bin": {
+    "manus-slides": "src/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

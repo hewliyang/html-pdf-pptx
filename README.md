@@ -1,6 +1,6 @@
-# html-pdf-pptx
+## manus-slides
 
-a html -> pdf -> pptx pipeline
+HTML → PDF → PPTX pipeline as a single CLI.
 
 ## features
 
@@ -10,36 +10,52 @@ a html -> pdf -> pptx pipeline
 4. OK for commercial use, apache 2.0 (Puppeteer) & GPLv3 (Libreoffice)
 
 ## tradeoffs
-slow, but can be parallelized because the individual html -> pdf conversion can be mapreduced
+
+slow, but can be parallelized because the individual html -> pdf conversion can be mapreduced. You can control parallelism with the `--concurrency <n>` flag (default 4). Higher values are faster but use more CPU/RAM due to multiple Chromium instances.
 
 ## examples
 
 ### Current Manus Export (PPTX)
+
 <img width="1667" height="1083" alt="Screenshot 2025-08-04 at 2 52 25 PM" src="https://github.com/user-attachments/assets/3dbc7c7d-dc13-49c3-966d-f043dbf6c757" />
 
 ### This pipeline
-<img width="1667" height="1083" alt="Screenshot 2025-08-04 at 2 52 19 PM" src="https://github.com/user-attachments/assets/dbb6f56f-2201-44f9-8243-f17096cd4d0d" />
 
+<img width="1667" height="1083" alt="Screenshot 2025-08-04 at 2 52 19 PM" src="https://github.com/user-attachments/assets/dbb6f56f-2201-44f9-8243-f17096cd4d0d" />
 
 ## manus
 
-`slides-to-pptx.js` supports passing in the Manus `slides.json`, which is also used when requesting for export on the platform
+`manus-slides` supports passing in the Manus `slides.json`, which is also used when requesting for export on the platform
 
 ```yaml
 POST https://api.manus.im/session.v1.SessionPublicService/CreateSessionFileConvertTask
 convertType: "SESSION_FILE_CONVERT_TYPE_HTML_TO_PPT"
 fileName: "AWS Costs Breakdown"
 # presigned url w/ to the slides.json
-fromUrl: "https://private-us-east-1.manuscdn.com/sessionFile/mIaN0vMStA0DPbw0NkboBy/sandbox/imxsodzji... 
+fromUrl: "https://private-us-east-1.manuscdn.com/sessionFile/mIaN0vMStA0DPbw0NkboBy/sandbox/imxsodzji...
 ```
 
 usage:
 
 ```bash
-npm i
-node slides-to-pptx.js slides.json
+npx manus-slides aws-costs/slides.json
+# or locally
+node src/index.js aws-costs/slides.json
 ```
 
 ## prereqs
-- libreoffice
+
 - puppeteer and chromium
+- libreoffice (soffice in PATH)
+
+- macOS (Homebrew):
+
+  - `brew install --cask libreoffice`
+
+- Linux (Debian/Ubuntu):
+
+  - `sudo apt-get update && sudo apt-get install -y libreoffice-impress`
+
+- Linux (Fedora/RHEL/CentOS):
+
+  - `sudo dnf install -y libreoffice-impress`
